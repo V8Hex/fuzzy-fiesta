@@ -39,7 +39,7 @@ executable="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$app/Info.
 test -s "$app/$executable"
 bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")"
 [[ "$bundle_id" == com.fridgeful.mobile ]]
-xcrun lipo -verify_arch arm64 "$app/$executable"
+xcrun lipo "$app/$executable" -verify_arch arm64
 xcrun vtool -show-build "$app/$executable" | tee build/ios-platform.txt
 grep -Eq 'platform[[:space:]]+IOS[[:space:]]*$' build/ios-platform.txt
 
