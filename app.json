@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "Fridgeful",
+    "slug": "fridgeful",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "icon": "./assets/icon.png",
+    "scheme": "fridgeful",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FAFAF3"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fridgeful.mobile",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.fridgeful.mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#DFF1B8"
+      },
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "permissions": [
+        "android.permission.POST_NOTIFICATIONS"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "Fridgeful",
+      "description": "Less waste. A fuller life."
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Choose a receipt to add groceries to your fridge.",
+          "cameraPermission": "Photograph a receipt to add groceries to your fridge.",
+          "microphonePermission": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification.png",
+          "color": "#214B38"
+        }
+      ],
+      "@react-native-community/datetimepicker",
+      "expo-font",
+      "./plugins/withSplashRepair"
+    ]
+  }
+}
