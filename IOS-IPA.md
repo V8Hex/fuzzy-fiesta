@@ -1,6 +1,6 @@
 # Build the iPhone IPA
 
-An IPA has not been compiled yet. The source includes a macOS build workflow that compiles the real iPhone app and packages `Fridgeful-unsigned.ipa`. It checks the arm64 executable, iPhone platform, bundled JavaScript and ZIP integrity before publishing an artifact. This workflow has not run on macOS yet.
+An unsigned iPhone IPA was successfully compiled and packaged on September 29, 2026. Download it from the [successful GitHub build](https://github.com/V8Hex/fuzzy-fiesta/actions/runs/36642917505). The workflow checks the arm64 executable, iPhone platform, bundled JavaScript and ZIP integrity before publishing `Fridgeful-unsigned.ipa`. Signing is required before installation.
 
 ## GitHub build
 

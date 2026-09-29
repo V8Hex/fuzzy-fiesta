@@ -65,7 +65,7 @@ The `preview` profile produces an APK; the `production` profile produces a Play 
 
 ## Run on iPhone
 
-For an IPA, see **[IOS-IPA.md](IOS-IPA.md)**. The included GitHub Actions workflow compiles an unsigned iPhone IPA on a macOS runner; signing is required before installation. No iOS native build has been run yet.
+For an IPA, see **[IOS-IPA.md](IOS-IPA.md)**. The included GitHub Actions workflow has successfully compiled and packaged an unsigned arm64 iPhone IPA on a macOS runner. Signing is required before installation. Camera recognition and notification delivery still require testing on a physical iPhone.
 
 On a Mac with Xcode installed:
 

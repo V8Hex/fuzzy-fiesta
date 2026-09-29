@@ -8,6 +8,7 @@ This first version was checked with:
 - Visual inspection of fridge, receipt and impact screens, including a 320 × 700 small-phone viewport: passed after fixing a crowded hero label.
 - Expo iOS, Android and web JavaScript/Hermes bundle export: passed.
 - Native Android ARM64 release APK assembly: passed. Includes the native ML Kit receipt-recognition module.
+- Native iOS arm64 Release compilation and unsigned IPA packaging on GitHub's macOS runner: passed on September 29, 2026. The downloaded IPA was independently checked for archive integrity, the iPhone platform, bundled JavaScript, bundle ID and native receipt scanner.
 - Android resource verification: passed. A config plugin repairs empty splash outputs if an image conversion fails during prebuild and preserves complete linked resources in the release APK.
 
-The Android preview uses a testing signing key. It is not a Google Play release. Native camera/OCR quality and local notification delivery have not been tested on a physical phone. No iOS native binary was compiled or signed in this Linux environment; the Swift OCR module and iOS build configuration are included for Xcode/EAS builds. A GitHub Actions macOS workflow and unsigned-IPA build script are included, but have not been executed on macOS. Review these device flows before public release.
+The Android preview uses a testing signing key. It is not a Google Play release. The iPhone IPA is unsigned and must be signed and provisioned before installation. Native camera/OCR quality and local notification delivery have not been tested on a physical phone. The successful iOS build is available at https://github.com/V8Hex/fuzzy-fiesta/actions/runs/36642917505. Review these device flows before public release.
