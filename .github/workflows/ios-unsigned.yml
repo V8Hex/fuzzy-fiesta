@@ -40,8 +40,8 @@ jobs:
       - name: Save IPA
         uses: actions/upload-artifact@v4
         with:
-          name: Fridgeful-unsigned-IPA
-          path: build/Fridgeful-unsigned.ipa
+          name: Before-It-Goes-unsigned-IPA
+          path: build/Before-It-Goes-unsigned.ipa
           if-no-files-found: error
           retention-days: 14
           compression-level: 0

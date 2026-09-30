@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Fridgeful",
-    "slug": "fridgeful",
+    "name": "Before It Goes",
+    "slug": "before-it-goes",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/icon.png",
-    "scheme": "fridgeful",
+    "scheme": "before-it-goes",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -34,7 +34,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png",
-      "name": "Fridgeful",
+      "name": "Before It Goes",
       "description": "Less waste. A fuller life."
     },
     "plugins": [

@@ -22,10 +22,10 @@ type Confirm={title:string;body:string;label:string;action:()=>void};
 
 export default function App() {
   const [fontsLoaded,fontError]=useFonts({Manrope_500Medium,Manrope_600SemiBold,Manrope_700Bold,Manrope_800ExtraBold,...emojiFonts});
-  return <SafeAreaProvider><StatusBar style="dark"/><SheetProvider>{fontsLoaded||fontError?<Fridgeful/>:<View style={[styles.loading,{backgroundColor:C.bg}]}><ActivityIndicator color={C.green}/></View>}</SheetProvider></SafeAreaProvider>;
+  return <SafeAreaProvider><StatusBar style="dark"/><SheetProvider>{fontsLoaded||fontError?<BeforeItGoes/>:<View style={[styles.loading,{backgroundColor:C.bg}]}><ActivityIndicator color={C.green}/></View>}</SheetProvider></SafeAreaProvider>;
 }
 
-function Fridgeful() {
+function BeforeItGoes() {
   const [state,dispatch]=useReducer(reducer,EMPTY);
   const [ready,setReady]=useState(false),[recovery,setRecovery]=useState<string|null>(null),[tab,setTab]=useState<Tab>('fridge');
   const [store,setStore]=useState<Storage|'all'>('all'),[filterSoon,setFilterSoon]=useState(false),[query,setQuery]=useState('');
@@ -91,17 +91,17 @@ function Fridgeful() {
   }
   async function toggleReminders(enabled:boolean) {
     if(!enabled){dispatch({type:'settings',settings:{reminders:false}});return;}
-    try{if(!await requestReminders()){setReminderError(remindersAvailable?'Allow notifications in your phone settings to turn on reminders.':'Reminders are available in the installed Fridgeful app.');return;}dispatch({type:'settings',settings:{reminders:true}});notify('Reminders are on');}catch(error){setReminderError(error instanceof Error?error.message:'Could not enable reminders.');}
+    try{if(!await requestReminders()){setReminderError(remindersAvailable?'Allow notifications in your phone settings to turn on reminders.':'Reminders are available in the installed Before It Goes app.');return;}dispatch({type:'settings',settings:{reminders:true}});notify('Reminders are on');}catch(error){setReminderError(error instanceof Error?error.message:'Could not enable reminders.');}
   }
   async function backup() {try{await exportBackup(state);notify('Backup is ready to save');}catch(error){notify(error instanceof Error?error.message:'Could not export your backup.');}}
   async function restore() {try{const next=await importBackup();if(!next)return;setConfirm({title:'Restore this backup?',body:`Replace your current kitchen with ${next.items.length} groceries and ${next.activity.length} activity records? Export your current data first if you want to keep it.`,label:'Restore backup',action:()=>{dispatch({type:'replace',state:next});setDetailId(null);notify('Your kitchen is restored');}});}catch(error){notify(error instanceof Error?error.message:'Could not read this backup.');}}
 
   if(!ready)return <View style={[styles.loading,{backgroundColor:C.bg}]}><ActivityIndicator color={C.green}/><T>Opening your kitchen…</T></View>;
   if(loadError)return <SafeAreaView style={{flex:1,backgroundColor:C.bg}}><View style={s.page}><T style={s.h1}>Your kitchen needs a moment.</T><T style={s.error}>{loadError}</T><Button label="Try again" onPress={()=>setLoadAttempt(n=>n+1)}/></View></SafeAreaView>;
-  if(recovery!==null)return <SafeAreaView style={{flex:1,backgroundColor:C.bg}}><View style={s.page}><T style={s.h1}>Let’s recover your kitchen.</T><T>Saved data could not be read. You can export the original data before starting fresh.</T><Button label="Export original data" onPress={()=>exportText(recovery,'Fridgeful-recovery.json').catch(e=>notify(e.message))}/><Button label="Start fresh" secondary onPress={()=>setConfirm({title:'Reset unreadable data?',body:'Export the original data first if you want to preserve it.',label:'Reset',action:()=>{dispatch({type:'replace',state:EMPTY});setRecovery(null);}})}/></View>{confirm&&<ConfirmSheet confirm={confirm} onClose={()=>setConfirm(null)}/>}</SafeAreaView>;
+  if(recovery!==null)return <SafeAreaView style={{flex:1,backgroundColor:C.bg}}><View style={s.page}><T style={s.h1}>Let’s recover your kitchen.</T><T>Saved data could not be read. You can export the original data before starting fresh.</T><Button label="Export original data" onPress={()=>exportText(recovery,'Before-It-Goes-recovery.json').catch(e=>notify(e.message))}/><Button label="Start fresh" secondary onPress={()=>setConfirm({title:'Reset unreadable data?',body:'Export the original data first if you want to preserve it.',label:'Reset',action:()=>{dispatch({type:'replace',state:EMPTY});setRecovery(null);}})}/></View>{confirm&&<ConfirmSheet confirm={confirm} onClose={()=>setConfirm(null)}/>}</SafeAreaView>;
   return <SafeAreaView edges={['top','left','right']} style={styles.safe}>
     <View style={styles.app}>
-      <View style={styles.header}><View style={s.row}><View style={styles.brandIcon}><Icon name="leaf" size={22} color={C.lime}/></View><T style={styles.brand}>fridgeful<T style={{color:'#8BA869',fontSize:25}}> .</T></T></View><IconButton name="information-outline" label="About planning dates" onPress={()=>setInfo(true)}/></View>
+      <View style={styles.header}><View style={s.row}><View style={styles.brandIcon}><Icon name="leaf" size={22} color={C.lime}/></View><T style={styles.brand}>Before It Goes<T style={{color:'#8BA869',fontSize:25}}> .</T></T></View><IconButton name="information-outline" label="About planning dates" onPress={()=>setInfo(true)}/></View>
       {!!saveError&&<View style={styles.errorBanner}><T style={s.error}>{saveError}</T><Pressable onPress={backup}><T style={s.link}>Export backup</T></Pressable></View>}
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={s.page} showsVerticalScrollIndicator={false}>
         {tab==='fridge'&&<>
@@ -153,7 +153,7 @@ function Fridgeful() {
           <Section title="Your data stays yours"/><View style={[s.card,{gap:14}]}><View style={s.row}><Icon name="shield-checkmark-outline"/><T style={{flex:1,lineHeight:22}}>No account. No receipt uploads. Your kitchen is saved on this device.</T></View><Button label="Export a backup" icon="download-outline" secondary onPress={backup}/><Button label="Restore a backup" icon="cloud-upload-outline" secondary onPress={restore}/><T style={s.hint}>Backups can be moved between iOS and Android. Uninstalling or clearing app storage removes local data.</T></View>
           <Section title="Planning dates explained"/><View style={[s.card,{gap:12}]}><T style={{lineHeight:23}}>Package dates and storage estimates stay visible side by side. The earlier date becomes your reminder target.</T><T style={s.hint}>Food stored in the freezer gets a quality target. A date cannot detect spoilage, unsafe handling, power outages or recalls.</T><Button label="Read the food guidance" secondary onPress={()=>setInfo(true)}/></View>
           <Button label="Clear my kitchen" danger icon="trash-outline" onPress={()=>setConfirm({title:'Clear your kitchen?',body:'This removes all groceries, grocery trips and food-use history. Export a backup first if you want to keep them.',label:'Clear all data',action:()=>{dispatch({type:'replace',state:{...EMPTY,settings:{...state.settings}}});setQuery('');setFilterSoon(false);setDetailId(null);notify('Ready for a fresh start');}})}/>
-          <T style={[s.hint,{textAlign:'center'}]}>Fridgeful · Version 1.0.0{'\n'}Less waste. A fuller life.</T>
+          <T style={[s.hint,{textAlign:'center'}]}>Before It Goes · Version 1.0.0{'\n'}Less waste. A fuller life.</T>
         </>}
       </ScrollView>
       <SafeAreaView edges={['bottom']} style={styles.navSafe}><View style={styles.nav}>{tabItems.map(t=><Pressable key={t.id} accessibilityRole="tab" accessibilityState={{selected:tab===t.id}} accessibilityLabel={t.label} onPress={()=>setTab(t.id)} style={styles.navItem}><View style={[styles.navIcon,tab===t.id&&{backgroundColor:C.lime}]}><Icon name={t.icon} size={21} color={tab===t.id?C.ink:'#8F9A8B'}/></View><T style={[styles.navLabel,tab===t.id&&{color:C.ink}]}>{t.label}</T></Pressable>)}</View></SafeAreaView>
@@ -180,7 +180,7 @@ function Fridgeful() {
     <ItemEditor item={editor} onSave={saveItem} onClose={()=>setEditor(null)}/>
     {confirm&&<ConfirmSheet confirm={confirm} onClose={()=>setConfirm(null)}/>} 
     <Sheet title="Food dates, thoughtfully" visible={info} priority={40} onClose={()=>setInfo(false)}>
-      <View style={styles.bigLeaf}><Icon name="leaf-outline" size={40}/></View><T style={s.h2}>Less guesswork. Still use care.</T><T style={{lineHeight:24}}>Fridgeful helps you plan what to use next. It cannot know when food actually spoils or certify that food is safe to eat.</T>
+      <View style={styles.bigLeaf}><Icon name="leaf-outline" size={40}/></View><T style={s.h2}>Less guesswork. Still use care.</T><T style={{lineHeight:24}}>Before It Goes helps you plan what to use next. It cannot know when food actually spoils or certify that food is safe to eat.</T>
       <View style={s.notice}><T style={s.h3}>Two dates, one planning target</T><T style={s.hint}>Your package date is stored exactly as entered. A category estimate uses purchase and opening dates. Reminders use the earlier of the two, so a later package date won’t override a shorter storage window.</T></View>
       <T style={{lineHeight:24}}>For raw poultry, ground meat, raw meat cuts, fin fish and cooked leftovers, the app uses the short end of published refrigerated guidance. Eggs use the FDA’s 3-week quality recommendation. Produce, dairy and bread estimates are rough planning defaults, clearly marked in item details.</T>
       <T style={{lineHeight:24}}>Freezer estimates concern quality, not a safety deadline. Storage clocks stay tied to purchase dates when you change a location. Always follow product-specific handling, thawing and after-opening instructions.</T>
@@ -204,7 +204,7 @@ function FoodRow({item,now,days,onPress}:{item:FoodItem;now:string;days:number;o
 
 const styles=StyleSheet.create({
   safe:{flex:1,backgroundColor:C.bg},app:{flex:1,width:'100%',maxWidth:520,alignSelf:'center',backgroundColor:C.bg},loading:{flex:1,alignItems:'center',justifyContent:'center',gap:16},
-  header:{paddingHorizontal:24,paddingTop:12,paddingBottom:18,flexDirection:'row',justifyContent:'space-between',alignItems:'center'},brandIcon:{width:35,height:35,borderRadius:13,backgroundColor:C.green,alignItems:'center',justifyContent:'center'},brand:{fontFamily:'Manrope_800ExtraBold',fontSize:24,letterSpacing:-1.1},
+  header:{paddingHorizontal:24,paddingTop:12,paddingBottom:18,flexDirection:'row',justifyContent:'space-between',alignItems:'center'},brandIcon:{width:35,height:35,borderRadius:13,backgroundColor:C.green,alignItems:'center',justifyContent:'center'},brand:{fontFamily:'Manrope_800ExtraBold',fontSize:20,letterSpacing:-0.8},
   itemCount:{backgroundColor:C.pale,flexDirection:'row',alignItems:'center',paddingHorizontal:10,paddingVertical:8,borderRadius:12,gap:6},dot:{width:5,height:5,borderRadius:3,backgroundColor:'#85A85A'},
   hero:{backgroundColor:C.green,borderRadius:27,padding:24,minHeight:210,flexDirection:'row',overflow:'hidden'},heroNumber:{fontFamily:'Manrope_800ExtraBold',fontSize:64,lineHeight:72,color:C.lime,letterSpacing:-4},heroButton:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',gap:8,backgroundColor:C.lime,alignSelf:'flex-start',borderRadius:12,paddingHorizontal:12,paddingVertical:12},heroArt:{width:115,height:176,alignSelf:'center',marginRight:-6},artRing:{width:180,height:180,borderRadius:90,borderWidth:1,borderColor:'#456752',position:'absolute',left:7,top:4},foodBubble:{position:'absolute',width:82,height:82,borderRadius:28,alignItems:'center',justifyContent:'center',backgroundColor:'#EAF1D7'},spark:{position:'absolute',left:0,top:87},
   impactStrip:{backgroundColor:'#EEF2E5',padding:15,borderRadius:18,flexDirection:'row',alignItems:'center',gap:10,marginTop:-8},miniLeaf:{width:32,height:32,borderRadius:12,alignItems:'center',justifyContent:'center',backgroundColor:'#DCEAC8'},

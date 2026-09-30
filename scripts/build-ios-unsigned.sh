@@ -19,8 +19,8 @@ npx expo prebuild --platform ios --no-install
 (cd ios && pod install)
 
 xcodebuild \
-  -workspace ios/Fridgeful.xcworkspace \
-  -scheme Fridgeful \
+  -workspace ios/BeforeItGoes.xcworkspace \
+  -scheme BeforeItGoes \
   -configuration Release \
   -sdk iphoneos \
   -destination 'generic/platform=iOS' \
@@ -32,13 +32,15 @@ xcodebuild \
   CODE_SIGN_IDENTITY='' \
   build 2>&1 | tee build/ios-build.log
 
-app="$project_root/build/ios/Build/Products/Release-iphoneos/Fridgeful.app"
+app="$project_root/build/ios/Build/Products/Release-iphoneos/BeforeItGoes.app"
 test -s "$app/Info.plist"
 test -s "$app/main.jsbundle"
 executable="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$app/Info.plist")"
 test -s "$app/$executable"
 bundle_id="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")"
 [[ "$bundle_id" == com.fridgeful.mobile ]]
+display_name="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")"
+[[ "$display_name" == 'Before It Goes' ]]
 xcrun lipo "$app/$executable" -verify_arch arm64
 xcrun vtool -show-build "$app/$executable" | tee build/ios-platform.txt
 grep -Eq 'platform[[:space:]]+IOS[[:space:]]*$' build/ios-platform.txt
@@ -46,11 +48,11 @@ grep -Eq 'platform[[:space:]]+IOS[[:space:]]*$' build/ios-platform.txt
 staging="$(mktemp -d "$project_root/build/ipa-payload.XXXXXX")"
 trap 'rm -rf "$staging"' EXIT
 mkdir "$staging/Payload"
-ditto "$app" "$staging/Payload/Fridgeful.app"
-ipa="$project_root/build/Fridgeful-unsigned.ipa"
+ditto "$app" "$staging/Payload/BeforeItGoes.app"
+ipa="$project_root/build/Before-It-Goes-unsigned.ipa"
 rm -f "$ipa"
 (cd "$staging" && zip -qry "$ipa" Payload)
 unzip -tq "$ipa"
-shasum -a 256 "$ipa" | tee build/Fridgeful-unsigned.ipa.sha256
+shasum -a 256 "$ipa" | tee build/Before-It-Goes-unsigned.ipa.sha256
 echo "Created: $ipa"
 echo 'Unsigned device build: sign it before installing. Not a TestFlight/App Store build.'

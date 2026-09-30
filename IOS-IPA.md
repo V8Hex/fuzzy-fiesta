@@ -1,13 +1,13 @@
 # Build the iPhone IPA
 
-An unsigned iPhone IPA was successfully compiled and packaged on September 29, 2026. Download it from the [successful GitHub build](https://github.com/V8Hex/fuzzy-fiesta/actions/runs/36642917505). The workflow checks the arm64 executable, iPhone platform, bundled JavaScript and ZIP integrity before publishing `Fridgeful-unsigned.ipa`. Signing is required before installation.
+The app is named **Before It Goes**. The macOS build workflow compiles a real iPhone app and checks its arm64 executable, iPhone platform, display name, bundled JavaScript and ZIP integrity before publishing `Before-It-Goes-unsigned.ipa`. Signing is required before installation.
 
 ## GitHub build
 
-1. Create a GitHub repository and put the **contents** of the `Fridgeful` folder at the repository root. `package.json`, `scripts` and `.github` must be at the root, not inside another `Fridgeful` folder. Include the `.github` directory from this ZIP.
+1. Put the app source at the GitHub repository root. `package.json`, `scripts` and `.github` must be at the root. Include the `.github` directory.
 2. Enable GitHub Actions for the repository. Ensure your account has macOS runner capacity available.
 3. Open **Actions → Build unsigned iPhone IPA → Run workflow**. A push to `main` also starts a build.
-4. When the build succeeds, download **Fridgeful-unsigned-IPA** from that run's artifacts. Extract that artifact ZIP to get **Fridgeful-unsigned.ipa**.
+4. When the build succeeds, download **Before-It-Goes-unsigned-IPA** from that run's artifacts. Extract that artifact ZIP to get **Before-It-Goes-unsigned.ipa**.
 
 No Expo account, Apple certificate or developer account is required for this unsigned compilation. The workflow runs on `macos-15` with Xcode 16.4 and Node 22, installs native dependencies, and compiles the receipt-recognition module into a Release iPhone app.
 
@@ -22,7 +22,7 @@ npm ci
 bash scripts/build-ios-unsigned.sh
 ```
 
-The output is `build/Fridgeful-unsigned.ipa`. A failed native compilation produces no new IPA.
+The output is `build/Before-It-Goes-unsigned.ipa`. A failed native compilation produces no new IPA.
 
 ## Signed build for registered iPhones
 

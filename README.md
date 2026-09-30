@@ -1,8 +1,8 @@
-# Fridgeful
+# Before It Goes
 
 **Less waste. A fuller life.**
 
-Fridgeful turns supermarket receipts into a virtual kitchen. Photograph a receipt, review the detected groceries, and keep track of food in your fridge, freezer or pantry. Add the dates printed on your products, set food reminders, and record what you eat or waste.
+Before It Goes turns supermarket receipts into a virtual kitchen. Photograph a receipt, review the detected groceries, and keep track of food in your fridge, freezer or pantry. Add the dates printed on your products, set food reminders, and record what you eat or waste.
 
 This is a working first version built with React Native, TypeScript and Expo SDK 54. It uses one shared app for iOS and Android, with native receipt recognition on each platform.
 
@@ -39,7 +39,7 @@ Use **Try a demo fridge** on the empty fridge screen, or choose **Add food → T
 
 ## Run on Android
 
-If you downloaded **Fridgeful.apk** along with this source package, it is a standalone preview installer for **64-bit ARM Android phones** (Android 7 or newer). Open it on Android and allow installation from your download app when prompted. It does not need Expo Go or a running computer. It is signed with a development/testing key, so it is intended for testing rather than store distribution. Export your data before replacing it with a differently signed build, since Android may require uninstalling it first.
+The earlier **Fridgeful.apk** preview retains the previous app name. It is a standalone preview installer for **64-bit ARM Android phones** (Android 7 or newer). Open it on Android and allow installation from your download app when prompted. It does not need Expo Go or a running computer. It is signed with a development/testing key, so it is intended for testing rather than store distribution. Export your data before replacing it with a differently signed build, since Android may require uninstalling it first.
 
 For local development, install Android Studio with an SDK and Java 17 JDK, connect an Android device with USB debugging, then run:
 
@@ -75,7 +75,7 @@ npx expo prebuild --platform ios
 npx pod-install
 ```
 
-Open `ios/Fridgeful.xcworkspace` in Xcode, select your signing team and connected iPhone, then run the app. Native iOS code requires Xcode/macOS. The minimum deployment target is iOS 15.1.
+Open `ios/BeforeItGoes.xcworkspace` in Xcode, select your signing team and connected iPhone, then run the app. Native iOS code requires Xcode/macOS. The minimum deployment target is iOS 15.1.
 
 For an EAS internal iPhone build, sign in to your Expo account, configure the project, and use your Apple Developer account:
 

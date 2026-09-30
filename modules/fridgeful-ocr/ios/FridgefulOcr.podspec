@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
   s.name = 'FridgefulOcr'
   s.version = '1.0.0'
-  s.summary = 'Private, on-device receipt text recognition for Fridgeful'
+  s.summary = 'Private, on-device receipt text recognition for Before It Goes'
   s.description = s.summary
-  s.author = 'Fridgeful'
+  s.author = 'Before It Goes'
   s.homepage = 'https://docs.expo.dev/modules/'
   s.platforms = { :ios => '15.1' }
   s.source = { :git => '' }

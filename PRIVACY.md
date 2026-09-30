@@ -1,8 +1,8 @@
-# Fridgeful privacy note
+# Before It Goes privacy note
 
 This first version has no account system, receipt-upload backend, advertising service or AI API integration.
 
-- Receipt photos are processed locally by Apple Vision on iOS or Google ML Kit on Android. Fridgeful does not upload receipt photos or extracted receipt text to its own server.
+- Receipt photos are processed locally by Apple Vision on iOS or Google ML Kit on Android. Before It Goes does not upload receipt photos or extracted receipt text to its own server.
 - Grocery names, dates, quantities, prices, grocery-trip summaries, preferences and food-use records are saved locally on the device.
 - Receipt images are not copied into the persistent inventory. The operating system and photo picker may retain camera or image-picker files according to their normal behavior.
 - Camera access is requested when you choose to take a receipt photo. Notification access is requested when you enable reminders.
