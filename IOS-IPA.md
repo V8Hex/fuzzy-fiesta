@@ -1,6 +1,6 @@
 # Build the iPhone IPA
 
-The app is named **Before It Goes**. The macOS build workflow compiles a real iPhone app and checks its arm64 executable, iPhone platform, display name, bundled JavaScript and ZIP integrity before publishing `Before-It-Goes-unsigned.ipa`. Signing is required before installation.
+The app is named **Before It Goes**. Download the renamed IPA from the [successful GitHub build](https://github.com/V8Hex/fuzzy-fiesta/actions/runs/36650280103). The macOS build workflow compiles a real iPhone app and checks its arm64 executable, iPhone platform, display name, bundled JavaScript and ZIP integrity before publishing `Before-It-Goes-unsigned.ipa`. Signing is required before installation.
 
 ## GitHub build
 
